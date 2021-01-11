@@ -1,4 +1,4 @@
-PROJECT := remote-button
+PROJECT := mealx
 
 default: usage
 usage:

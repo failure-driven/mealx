@@ -3,6 +3,6 @@ Rails.application.routes.draw do
 
   # TODO: remove if we ever write any other tests
   get "test_root", to: "rails/welcome#index", as: "test_root_rails"
-  # TODO: remove below once we have a proper root
-  root to: "rails/welcome#index"
+
+  root to: "home#index"
 end
