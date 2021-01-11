@@ -17,5 +17,5 @@ build:
 .PHONY: deploy
 deploy:
 	RAILS_MASTER_KEY=`cat config/master.key` \
-		HEROKU_APP_NAME=stg-remote-button      \
+		HEROKU_APP_NAME=stg-mealx							 \
 		bin/heroku-create
