@@ -1,3 +1,24 @@
+<h1 align="center">MealX</h1>
+
+<div align="center">
+
+[![CircleCI](https://circleci.com/gh/failure-driven/mealx.svg?style=svg)](https://circleci.com/gh/failure-driven/mealx)
+
+</div>
+
+MealX will multiply your dining out!
+
+# TL;DR
+
+```
+asdf install
+npm install -g https://yarnpkg.com/downloads/1.22.5/yarn-v1.22.5.tar.gz
+
+make build
+
+rails server
+open http://localhost:3000
+```
 # README
 
 This README would normally document whatever steps are necessary to get the
