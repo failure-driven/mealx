@@ -28,7 +28,38 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
+# Adding for consistent Ruby styling
+gem "rubocop"
+
+group :test do
+  gem "database_cleaner"
+
+  # Factory bot for testing
+  gem "factory_bot_rails"
+
+  gem "rspec-example_steps"
+  gem "rspec-rails"
+  gem "rspec-wait"
+
+  gem "capybara", ">= 3.14"
+  gem "capybara-screenshot"
+  gem "selenium-webdriver"
+  gem "webdrivers", "~> 3.0"
+
+  gem "pry"
+  gem "pry-rails"
+  gem "pry-stack_explorer"
+
+  gem "capybara-email"
+end
+
 group :development, :test do
+  # call as my_complex_hash for awesome pretty print
+  gem "awesome_print"
+
+  # dev and test to be able to call binding.pry in specs
+  gem "pry-byebug"
+
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
