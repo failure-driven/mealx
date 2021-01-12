@@ -36,7 +36,7 @@
     - https://www.plymouthsoftware.com/articles/ruby-on-rails-5-checks-before-launching-your-app
       - [ ] customise 404 and 500 pages
       - [ ] enfoce ssl
-      - [ ] use UUID
+      - [x] use UUID
     - https://github.com/codelitt/launchpage-rails
       - sample app
 
