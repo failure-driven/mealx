@@ -30,6 +30,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 # Adding for consistent Ruby styling
 gem "rubocop"
+gem "rubocop-rails"
+gem "rubocop-rspec"
 
 group :test do
   gem "database_cleaner"
