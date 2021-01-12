@@ -43,7 +43,6 @@
 - [ ] A/B test landing pages
 - [ ] google analytics
 - [ ] location directory for SEO
-- [ ] bootstrap working in production
 - [ ] linting
 - [ ] react
 - [ ] upgrade to Ruby 3.0.0
@@ -55,5 +54,5 @@
 
 ## Done
 
-- ...
+- [x] bootstrap working in production
 
