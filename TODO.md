@@ -43,16 +43,22 @@
 - [ ] A/B test landing pages
 - [ ] google analytics
 - [ ] location directory for SEO
-- [ ] linting
-- [ ] react
+- [ ] js prettier
 - [ ] upgrade to Ruby 3.0.0
 - [ ] search page
 - [ ] result page
 - [ ] find restaurants job
 - [ ] find restaurant menu job
+  - [ ] or an API like https://documenu.com/
+  - [ ] http://openmenu.com/api/
+  - [ ] https://www.programmableweb.com/category/restaurants/api
+  - [ ] https://developers.google.com/my-business/content/update-food-menus
+  - [ ] https://developers.zomato.com/api
+  - [ ] https://developer.foursquare.com/developer/
 - [ ] restaurant menu job reader
 
 ## Done
 
 - [x] bootstrap working in production
-
+- [x] linting
+- [x] react

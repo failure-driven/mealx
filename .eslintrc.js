@@ -19,5 +19,13 @@ module.exports = {
     'react',
   ],
   rules: {
+    "react/forbid-prop-types": "off",
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ["./app/javascript"]
+      }
+    }
   },
 };

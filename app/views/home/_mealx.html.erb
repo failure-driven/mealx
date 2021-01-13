@@ -38,8 +38,23 @@
           <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
           <small id="emailHelp" class="form-text text-muted">We will make sure to let you know when we arrive</small>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg">tell me more</a>
+        <button type="submit" class="btn btn-primary btn-lg">tell me more</button>
       </form>
+
+      <%= content_tag(
+        :div,
+        nil,
+        class: "registration",
+        data: {
+          options: {
+            name: @name,
+            byline: "in react"
+          }
+        }
+      ) %>
+
     </div>
   </div>
 </header>
+
+<%= javascript_pack_tag "registration" %>
