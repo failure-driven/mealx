@@ -33,6 +33,14 @@ gem "rubocop"
 gem "rubocop-rails"
 gem "rubocop-rspec"
 
+# Feature flipping
+# Flipper
+gem 'flipper'
+# UI
+gem 'flipper-ui'
+# Adapter
+gem 'flipper-active_record'
+
 group :test do
   gem "database_cleaner"
 

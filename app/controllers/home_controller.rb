@@ -1,7 +1,11 @@
 class HomeController < ApplicationController
   def index
-    @variant = variants.sample
-    @name = @variant.to_s.humanize
+    if Flipper.enabled?(:pre_launch_signup)
+      @variant = variants.sample
+      @name = @variant.to_s.humanize
+    else
+      @variant = :coming_soon
+    end
   end
 
   def show

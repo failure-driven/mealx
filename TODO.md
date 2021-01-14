@@ -1,5 +1,30 @@
 # TODO
 
+**MM**
+
+- [ ] user model and devise
+- [ ] admin priveleges
+- [ ] secure flipper for feature flipping
+  - https://medium.com/@ppbruna/feature-flags-using-ruby-on-rails-59ca93195309
+- [ ] administrate or similar for backend pages
+- [ ] email and email framework
+- [ ] meal location model for manual data entry
+  - meal
+    - location_id,
+    - meal_id
+    - title,
+    - description,
+    - cost,
+    - has_many food elements,
+    - has_many hours served
+  - location hierarchy
+  - food element hierarchy
+  - hours in a week
+  - calendar
+  - meal taxonomy
+
+---
+
 - [ ] landing page
 
   - https://medium.com/@LoganTjm/9-tactics-of-pre-launch-app-landing-pages-that-get-thousands-of-signups-477905a0ed22
@@ -59,6 +84,12 @@
 
 ## Done
 
+- [x] feature framework
+  - [ ] https://launchdarkly.com/
+  - [ ] https://split.io/
+  - [x] https://www.flippercloud.io/
+    - https://github.com/jnunemaker/flipper
+    - https://medium.com/@ppbruna/feature-flags-using-ruby-on-rails-59ca93195309
 - [x] bootstrap working in production
 - [x] linting
 - [x] react
