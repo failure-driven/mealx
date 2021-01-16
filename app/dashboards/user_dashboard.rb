@@ -24,7 +24,7 @@ class UserDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = [:id, :email, :encrypted_password, :reset_password_token].freeze
+  COLLECTION_ATTRIBUTES = [:id, :email].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
@@ -49,8 +49,8 @@ class UserDashboard < Administrate::BaseDashboard
 
   # Overwrite this method to customize how users are displayed
   # across all pages of the admin dashboard.
-  #
-  # def display_resource(user)
-  #   "User ##{user.id}"
-  # end
+
+  def display_resource(user)
+    "User: #{user.email}"
+  end
 end
