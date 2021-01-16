@@ -72,10 +72,22 @@ Rails.application.configure do
   #       in which case they could live in environment.rb
   Rails.application.routes.default_url_options = {
     host: "stg-mealx.herokuapp.com",
-    port: "80",
     protocol: "https",
   }
   config.default_from_email = "failure.driven.blog@gmail.com"
+
+  # Setup the mailer config
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+    user_name: "apikey", # ENV['SENDGRID_USERNAME'],
+    password: Rails.application.credentials.sendgrid[:api_key], # ENV['SENDGRID_PASSWORD'],
+    domain: "failure-driven.com",
+    address: "smtp.sendgrid.net",
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true,
+  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

@@ -49,6 +49,9 @@ gem "administrate-field-jsonb"
 # email
 gem "premailer-rails"
 
+# Email sending on heroku
+gem "sendgrid-ruby"
+
 group :test do
   gem "database_cleaner"
 
