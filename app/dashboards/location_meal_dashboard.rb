@@ -13,10 +13,16 @@ class LocationMealDashboard < Administrate::BaseDashboard
     description: Field::String,
     image: Field::String,
     price_cents: Field::Number,
-    location_id: Field::String.with_options(searchable: false),
-    meal_id: Field::String.with_options(searchable: false),
-    food_item_id: Field::String.with_options(searchable: false),
-    serving_time_id: Field::String.with_options(searchable: false),
+    location: Field::BelongsTo.with_options(
+      searchable: true,
+      searchable_fields: ['name'],
+    ),
+    meal: Field::BelongsTo.with_options(
+      searchable: true,
+      searchable_fields: ['name'],
+    ),
+    food_items: Field::HasMany,
+    serving_times: Field::HasMany,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -41,10 +47,10 @@ class LocationMealDashboard < Administrate::BaseDashboard
   description
   image
   price_cents
-  location_id
-  meal_id
-  food_item_id
-  serving_time_id
+  location
+  meal
+  food_items
+  serving_times
   created_at
   updated_at
   ].freeze
@@ -57,10 +63,10 @@ class LocationMealDashboard < Administrate::BaseDashboard
   description
   image
   price_cents
-  location_id
-  meal_id
-  food_item_id
-  serving_time_id
+  location
+  meal
+  food_items
+  serving_times
   ].freeze
 
   # COLLECTION_FILTERS
