@@ -35,11 +35,14 @@ gem "rubocop-rspec"
 
 # Feature flipping
 # Flipper
-gem 'flipper'
+gem "flipper"
 # UI
-gem 'flipper-ui'
+gem "flipper-ui"
 # Adapter
-gem 'flipper-active_record'
+gem "flipper-active_record"
+
+# User management
+gem "devise"
 
 group :test do
   gem "database_cleaner"
