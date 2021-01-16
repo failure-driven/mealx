@@ -23,12 +23,13 @@ module Admin
     #
     def scoped_resource
       return resource_class if current_user.user_actions&.dig("admin", "can_administer")
+
       super.where(id: current_user)
-    #   if current_user.super_admin?
-    #     resource_class
-    #   else
-    #     resource_class.with_less_stuff
-    #   end
+      #   if current_user.super_admin?
+      #     resource_class
+      #   else
+      #     resource_class.with_less_stuff
+      #   end
     end
 
     # Override `resource_params` if you want to transform the submitted

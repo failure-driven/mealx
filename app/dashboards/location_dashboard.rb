@@ -20,32 +20,16 @@ class LocationDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = %i[
-  id
-  name
-  address
-  latitude
-  ].freeze
+  COLLECTION_ATTRIBUTES = [:id, :name, :address, :latitude].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = %i[
-  id
-  name
-  address
-  latitude
-  longitude
-  ].freeze
+  SHOW_PAGE_ATTRIBUTES = [:id, :name, :address, :latitude, :longitude].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  FORM_ATTRIBUTES = %i[
-  name
-  address
-  latitude
-  longitude
-  ].freeze
+  FORM_ATTRIBUTES = [:name, :address, :latitude, :longitude].freeze
 
   # COLLECTION_FILTERS
   # a hash that defines filters that can be used while searching via the search
