@@ -44,6 +44,7 @@ gem "flipper-active_record"
 # User management
 gem "devise"
 gem "administrate"
+gem "administrate-field-jsonb"
 
 group :test do
   gem "database_cleaner"
