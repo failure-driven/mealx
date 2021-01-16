@@ -14,6 +14,8 @@ MealX will multiply your dining out!
 asdf install
 npm install -g https://yarnpkg.com/downloads/1.22.5/yarn-v1.22.5.tar.gz
 
+bundle exec rails db:create && db:migrate
+
 make build
 
 rails server
