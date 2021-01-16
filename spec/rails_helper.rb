@@ -68,4 +68,8 @@ RSpec.configure do |config|
 
   # include PageFragments in features
   config.include PageFragments, type: :feature
+
+  # predictable host and port for email links
+  Capybara.server_port = 3001
+  Capybara.server_host = "localhost"
 end

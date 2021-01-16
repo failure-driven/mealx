@@ -5,7 +5,12 @@ Rails.application.routes.draw do
     resources :location_meals
     resources :meals
     resources :serving_times
-    resources :users
+    resources :users do
+      member do
+        get :send_user_registration
+        get :send_admin_invitation
+      end
+    end
 
     root to: "users#index"
   end

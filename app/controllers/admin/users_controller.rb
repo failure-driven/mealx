@@ -18,6 +18,26 @@ module Admin
 
     # The result of this lookup will be available as `requested_resource`
 
+    def send_user_registration
+      # TODO: add a one time token for signin
+      UserMailer
+        .with(user: requested_resource)
+        .user_registration
+        .deliver_later
+      redirect_to admin_user_path(requested_resource)
+    end
+
+    def send_admin_invitation
+      # TODO: add a one time token for signin without calling the protected token generator
+      # token = requested_resource.send(:set_reset_password_token)
+      # requested_resource.send_reset_password_instructions
+      UserMailer
+        .with(user: requested_resource)
+        .admin_invitation
+        .deliver_later
+      redirect_to admin_user_path(requested_resource)
+    end
+
     # Override this if you have certain roles that require a subset
     # this will be used to set the records shown on the `index` action.
     #

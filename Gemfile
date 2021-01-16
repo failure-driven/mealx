@@ -46,6 +46,9 @@ gem "devise"
 gem "administrate"
 gem "administrate-field-jsonb"
 
+# email
+gem "premailer-rails"
+
 group :test do
   gem "database_cleaner"
 
@@ -77,6 +80,9 @@ group :development, :test do
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+
+  # allow viewing emails in development
+  gem "letter_opener"
 end
 
 group :development do
