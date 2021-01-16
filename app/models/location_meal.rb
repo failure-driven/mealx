@@ -1,0 +1,2 @@
+class LocationMeal < ApplicationRecord
+end

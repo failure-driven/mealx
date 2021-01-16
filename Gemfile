@@ -43,6 +43,7 @@ gem "flipper-active_record"
 
 # User management
 gem "devise"
+gem "administrate"
 
 group :test do
   gem "database_cleaner"

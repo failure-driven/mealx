@@ -1,0 +1,2 @@
+class ServingTime < ApplicationRecord
+end
