@@ -83,8 +83,8 @@ class LocationMealDashboard < Administrate::BaseDashboard
 
   # Overwrite this method to customize how location meals are displayed
   # across all pages of the admin dashboard.
-  #
-  # def display_resource(location_meal)
-  #   "LocationMeal ##{location_meal.id}"
-  # end
+
+  def display_resource(location_meal)
+    location_meal.name
+  end
 end

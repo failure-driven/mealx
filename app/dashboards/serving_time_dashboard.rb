@@ -61,8 +61,8 @@ class ServingTimeDashboard < Administrate::BaseDashboard
 
   # Overwrite this method to customize how serving times are displayed
   # across all pages of the admin dashboard.
-  #
-  # def display_resource(serving_time)
-  #   "ServingTime ##{serving_time.id}"
-  # end
+
+  def display_resource(serving_time)
+    serving_time.name
+  end
 end
