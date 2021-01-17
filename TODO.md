@@ -2,12 +2,14 @@
 
 **MM**
 
-- [ ] user model and devise
-- [ ] admin priveleges
+- [ ] input some demo data
+- [ ] data for meal and location hierarchies
+- [ ] location as a hierarchy using closure tree gem?
 - [ ] secure flipper for feature flipping
   - https://medium.com/@ppbruna/feature-flags-using-ruby-on-rails-59ca93195309
-- [ ] administrate or similar for backend pages
-- [ ] email and email framework
+
+**SS**
+
 - [ ] meal location model for manual data entry
   - meal
     - location_id,
@@ -84,6 +86,10 @@
 
 ## Done
 
+- [x] user model and devise
+- [x] admin priveleges
+- [x] email and email framework
+- [x] administrate or similar for backend pages
 - [x] feature framework
   - [ ] https://launchdarkly.com/
   - [ ] https://split.io/
