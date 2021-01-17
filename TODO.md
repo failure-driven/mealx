@@ -2,11 +2,15 @@
 
 **MM**
 
+- [ ] System Time data
+  - [x] generate
+  - [ ] db:seeds to deploy and build
 - [ ] input some demo data
 - [ ] data for meal and location hierarchies
 - [ ] location as a hierarchy using closure tree gem?
 - [ ] secure flipper for feature flipping
   - https://medium.com/@ppbruna/feature-flags-using-ruby-on-rails-59ca93195309
+- [ ] mailer.scss is being used on the web page?
 
 **SS**
 
@@ -19,6 +23,18 @@
     - cost,
     - has_many food elements,
     - has_many hours served
+    - TODO
+      - location
+        - website
+        - opening hours
+        - established
+        - closed - to hold onto historical data
+      - menu
+        - location_id
+        - images
+        - date input
+        - date published
+        - associate meal items that were scanned from this menu
   - location hierarchy
   - food element hierarchy
   - hours in a week
