@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   # flipper route
   mount Flipper::UI.app(Flipper) => "/flipper"
 
+  resources :multiplier, only: [:index]
+
   resources :home, only: [:show]
   root to: "home#index"
 end

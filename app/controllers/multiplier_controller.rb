@@ -1,0 +1,2 @@
+class MultiplierController < ApplicationController
+end
