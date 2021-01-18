@@ -10,7 +10,6 @@
 - [ ] location as a hierarchy using closure tree gem?
 - [ ] secure flipper for feature flipping
   - https://medium.com/@ppbruna/feature-flags-using-ruby-on-rails-59ca93195309
-- [ ] mailer.scss is being used on the web page?
 
 **SS**
 
@@ -102,6 +101,7 @@
 
 ## Done
 
+- [x] mailer.scss is being used on the web page?
 - [x] user model and devise
 - [x] admin priveleges
 - [x] email and email framework
