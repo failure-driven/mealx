@@ -1,6 +1,6 @@
 module Resolvers
   class Locations < Resolvers::BaseResolver
-    argument :meal_names, [String], required: true
+    argument :meal_names, [String], required: false
 
     type [Types::Location], null: false
 
@@ -12,6 +12,7 @@ module Resolvers
             .arel_table[:name]
             .matches_any(meal_names),
         )
+        .limit(100)
     end
   end
 end

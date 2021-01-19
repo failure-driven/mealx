@@ -1,38 +1,45 @@
-import React from 'react';
-import uuid from 'react-uuid';
+import React, { useState } from 'react';
+import { object } from 'prop-types';
+import { Router, useNavigate } from '@reach/router';
+import { ApolloProvider, Query } from 'react-apollo';
+import { gql } from 'apollo-boost';
 
-export default function MealMultiplier() {
-  const filters = [
-    { id: uuid(), name: 'Eggs' },
-    { id: uuid(), name: 'Burger' },
-    { id: uuid(), name: 'Chocolate Cake' },
-  ];
-  const results = [
-    {
-      id: uuid(),
-      name: 'Cafe 1',
-      hours: '7am-4pm',
-      address: '1 High Street',
-      distance: '3km',
-    },
-    {
-      id: uuid(),
-      name: 'Cafe 2',
-      hours: '7am-4pm',
-      address: '2 Station Street',
-      distance: '3km',
-    },
-    {
-      id: uuid(),
-      name: 'Restaurant 15',
-      hours: '2pm-8pm',
-      address: '15 Springfield Street',
-      distance: '3km',
-    },
-  ];
+import ApolloClient from '../../api/ApolloClient';
+
+const GET_MEALS = gql`
+  query Meals($query: String!) {
+    meals(query: $query) {
+      id
+      name
+    }
+  }
+`;
+
+const GET_LOCATIONS = gql`
+  query Locations($mealNames: [String!]!) {
+    locations(mealNames: $mealNames) {
+      id
+      name
+      address
+      latitude
+      longitude
+    }
+  }
+`;
+
+function Meals({ meal }) {
+  const navigate = useNavigate();
+  const [query, setQuery] = useState('');
+  const [mealNames, setMealNames] = useState(
+    meal
+      ? meal
+        .split('+')
+        .map((mealString) => ({ id: mealString, name: mealString }))
+      : [],
+  );
 
   return (
-    <>
+    <ApolloProvider client={ApolloClient}>
       <div className="row">
         <div className="col-sm-2" />
         <div className="col-sm-8">
@@ -40,6 +47,8 @@ export default function MealMultiplier() {
             <input
               className="form-control"
               placeholder="Type a meal: eggs, burger, ..."
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
             />
           </form>
         </div>
@@ -47,34 +56,68 @@ export default function MealMultiplier() {
       <div className="row mt-2">
         <div className="col-sm-2" />
         <div className="col-sm-8">
-          {filters.map((filter) => (
-            <>
+          <Query query={GET_MEALS} variables={{ query }}>
+            {({ loading, error, data }) => {
+              if (loading) return 'loading ...';
+              if (error) return `Error! ${query} ${error.message}`;
+              return data.meals.map(({ id, name }) => (
+                <div key={id} className="mb-2">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => {
+                      setMealNames([...mealNames, { id, name }]);
+                      setQuery('');
+                      navigate(
+                        `/multiplier/${[
+                          ...mealNames.map((mealName) => mealName.name),
+                          name,
+                        ]
+                          .map((str) => str.toLowerCase())
+                          .join('+')}`,
+                      );
+                    }}
+                  >
+                    {name}
+                    &nbsp;
+                    <i className="fas fa-plus" />
+                  </button>
+                </div>
+              ));
+            }}
+          </Query>
+        </div>
+      </div>
+      <div className="row mt-2">
+        <div className="col-sm-2" />
+        <div className="col-sm-8">
+          {mealNames.map(({ id, name }) => (
+            <React.Fragment key={id}>
               <button
-                key={filter.id}
                 type="button"
-                className="btn btn-secondary mr-2"
+                className="btn btn-outline-secondary mr-2"
+                onClick={() => setMealNames(mealNames.filter((element) => element.id !== id))}
               >
-                {filter.name}
+                {name}
                 {' '}
 &nbsp;
                 <i className="fas fa-times" />
               </button>
               <i className="fas fa-plus mr-2" />
-            </>
+            </React.Fragment>
           ))}
         </div>
       </div>
       <hr />
       <div className="row">
-        <div className="col-sm-1" />
-        <div className="col-sm-9" />
-        <div className="col-sm-1">
-          <button type="button" className="btn">
+        <div className="col-sm-12">
+          <button type="button" className="btn btn-outline-info float-right">
             <i className="fas fa-map" />
           </button>
-        </div>
-        <div className="col-sm-1">
-          <button type="button" className="btn">
+          <button
+            type="button"
+            className="btn btn-outline-info float-right mr-2"
+          >
             <i className="fas fa-list" />
           </button>
         </div>
@@ -82,24 +125,38 @@ export default function MealMultiplier() {
       <div className="row">
         <div className="col-sm-1" />
         <div className="col-sm-10">
-          <div className="row">
-            <div className="col">
-              <i>Results</i>
-            </div>
-          </div>
-          {results.map((location) => (
-            <div key={location.id} className="row">
-              <div className="col-sm-3">{location.name}</div>
-              <div className="col-sm-3">{location.hours}</div>
-              <div className="col-sm-3">{location.distance}</div>
-              <div className="col-sm-3">{location.address}</div>
-            </div>
-          ))}
-          <div className="row">
-            <div className="col">...</div>
-          </div>
+          <Query
+            query={GET_LOCATIONS}
+            variables={{ mealNames: mealNames.map(({ name }) => name) }}
+          >
+            {({ loading, error, data }) => {
+              if (mealNames.length === 0) return '...';
+              if (loading) return 'loading ...';
+              if (error) return `Error! ${query} ${error.message}`;
+              return data.locations.map(({ id, name, address }) => (
+                <div key={id} className="row">
+                  <div className="col-sm-3">{name}</div>
+                  <div className="col-sm-3" />
+                  <div className="col-sm-6">{address}</div>
+                </div>
+              ));
+            }}
+          </Query>
         </div>
       </div>
-    </>
+    </ApolloProvider>
+  );
+}
+
+Meals.propTypes = {
+  meal: object.isRequired,
+};
+
+export default function MealMultiplier() {
+  return (
+    <Router>
+      <Meals path="multiplier" />
+      <Meals path="multiplier/:meal" />
+    </Router>
   );
 }

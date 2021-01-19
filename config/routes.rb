@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   mount Flipper::UI.app(Flipper) => "/flipper"
 
   resources :multiplier, only: [:index]
+  get "/multiplier/*all" => "multiplier#index"
 
   resources :home, only: [:show]
   root to: "home#index"
