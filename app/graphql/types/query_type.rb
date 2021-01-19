@@ -3,11 +3,11 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    # TODO: remove me
-    field :test_field, String, null: false,
-                               description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
-    end
+    field :locations,
+          resolver: Resolvers::Locations,
+          description: "Find locations by meal names"
+    field :meals,
+          resolver: Resolvers::Meals,
+          description: "Find Meals by fuzzy match"
   end
 end
