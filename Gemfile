@@ -52,6 +52,10 @@ gem "premailer-rails"
 # Email sending on heroku
 gem "sendgrid-ruby"
 
+# API
+gem "graphiql-rails", group: :development
+gem "graphql"
+
 group :test do
   gem "database_cleaner"
 
