@@ -54,7 +54,7 @@
       - network growth
       - social links
     - front page should make it obvious to what you are signing up to
-    - emotional and  problem focused copy
+    - emotional and problem focused copy
       - emotion
       - urgency
       - makes a promise
@@ -97,7 +97,19 @@
   - [ ] https://developers.google.com/my-business/content/update-food-menus
   - [ ] https://developers.zomato.com/api
   - [ ] https://developer.foursquare.com/developer/
-- [ ] restaurant menu job reader
+- [ ] restaurant menu digitization
+  - [ ] https://nanonets.com/blog/menu-digitization-ocr-deep-learning/
+  - [ ] https://menuparser.com/?ref=producthunt
+  - [ ] https://www.klippa.com/en/blog/information/automatically-scan-menu-cards-with-ocr-ml-for-market-research-and-competitor-analyses/
+  - [ ] https://aws.amazon.com/blogs/machine-learning/zomato-digitizes-menus-using-amazon-textract-and-amazon-sagemaker/
+    - zomato - search for specific dishes
+    - Amazon Textract
+    - Amazon Sagemaker - menu structure detector
+  - [ ] https://www.outsource2india.com/DataManagement/data-entry-restaurant-menu-digitization.asp
+  - [ ] https://engineering.fb.com/2018/09/11/ai-research/rosetta-understanding-text-in-images-and-videos-with-machine-learning/
+- [ ] realted products
+  - [ ] https://pickeasy.ca/
+  - [ ] https://yeppar.com/augmented-reality-restaurants.html
 
 ## Done
 

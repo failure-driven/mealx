@@ -96,7 +96,18 @@ function Meals({ meal }) {
               <button
                 type="button"
                 className="btn btn-outline-secondary mr-2"
-                onClick={() => setMealNames(mealNames.filter((element) => element.id !== id))}
+                onClick={() => {
+                  setMealNames(
+                    mealNames.filter((element) => element.id !== id),
+                  );
+                  navigate(
+                    `/multiplier/${mealNames
+                      .filter((element) => element.id !== id)
+                      .map((mealName) => mealName.name)
+                      .map((str) => str.toLowerCase())
+                      .join('+')}`,
+                  );
+                }}
               >
                 {name}
                 {' '}
