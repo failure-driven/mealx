@@ -6,6 +6,8 @@
   - [x] generate
   - [ ] db:seeds to deploy and build
 - [ ] input some demo data
+  - Not convinced on Meal and Food Type split
+  - should be title, description, link to all food items in descrpition and those placed in a hierarchy
 - [ ] data for meal and location hierarchies
 - [ ] location as a hierarchy using closure tree gem?
 - [ ] secure flipper for feature flipping
@@ -81,6 +83,10 @@
       - [x] use UUID
     - https://github.com/codelitt/launchpage-rails
       - sample app
+
+- [ ] money
+  - https://techcrunch.com/2020/12/01/announcing-techcrunchs-2021-event-calendar/
+  - https://www.snowflake.com/startupchallenge/
 
 - [ ] A/B test landing pages
 - [ ] google analytics
