@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   # flipper route
   mount Flipper::UI.app(Flipper) => "/flipper"
 
+  resources :recipes, only: [:index]
+
   resources :multiplier, only: [:index]
   get "/multiplier/*all" => "multiplier#index"
 
