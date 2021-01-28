@@ -1,4 +1,4 @@
-class RecipesController < ApplicationController # rubocop:disable Metrics/ClassLength
+class RecipesController < ApplicationController
   def index
     @supported_recipes = SUPPORTED_RECIPES
   end
