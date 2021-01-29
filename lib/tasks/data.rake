@@ -20,7 +20,7 @@ def call_operation(operation, query_params) # rubocop:disable Metrics/AbcSize
   puts JSON.pretty_generate(JSON.parse(response.body)).yellow
 end
 
-def fetch_using_cache(uri, cache_dir, cached: false) # rubocop:disable Metrics/AbcSize
+def fetch_using_cache(uri, cache_dir, cached: false, cache_key: nil) # rubocop:disable Metrics/AbcSize
   uri_filename = [uri.path, uri.query]
                  .compact
                  .join("?")
@@ -29,8 +29,9 @@ def fetch_using_cache(uri, cache_dir, cached: false) # rubocop:disable Metrics/A
                  .gsub(/\?/, "-")
                  .gsub("&", "-")
                  .gsub(/=/, "-")
-  uri_filename = File.join(cache_dir, uri_filename)
-  if !cached && !(File.exist? uri_filename)
+  cache_key ||= uri_filename
+  cache_key = File.join(cache_dir, cache_key)
+  if !cached && !(File.exist? cache_key)
     request = Net::HTTP::Get.new uri
     request["user-agent"] = "Mozilla/5.0"
     request["Cookie"] = ""
@@ -42,14 +43,31 @@ def fetch_using_cache(uri, cache_dir, cached: false) # rubocop:disable Metrics/A
       http.request request
     end
     if response.is_a?(Net::HTTPSuccess)
-      File.open(uri_filename, "wb") do |io|
+      File.open(cache_key, "wb") do |io|
         io.write response.body
       end
     end
     sleep(rand(1..5)) # random sleep 1 - 5 seconds
   end
-  File.open(uri_filename).read if File.exist? uri_filename
+  File.open(cache_key).read if File.exist? cache_key
   # TODO: what to do if there is no file still?
+end
+
+def ocrspace_uri_for(image_url)
+  cache_key = URI.parse(image_url).path
+                 .sub(/jpg$/, "menu.json")
+                 .sub(%r{^/}, "")
+                 .gsub(%r{/}, "-")
+  ocrspace_uri = URI(
+    [
+      "https://api.ocr.space/parse/imageurl",
+      URI.encode_www_form(
+        apikey: Rails.application.credentials.ocrspace[:api_key],
+        url: image_url,
+      ),
+    ].join("?"),
+  )
+  [ocrspace_uri, cache_key]
 end
 
 namespace :data do
@@ -232,6 +250,21 @@ namespace :data do
                                       })
             menu_urls&.each do |menu_image_url|
               fetch_using_cache(URI(menu_image_url), cache_dir, cached: cached)
+              (ocrspace_uri, cache_key) = ocrspace_uri_for(menu_image_url)
+              body = fetch_using_cache(
+                ocrspace_uri,
+                cache_dir,
+                cached:
+                cached,
+                cache_key: cache_key,
+              )
+
+              response_json = JSON.parse(body)
+              parsed_texts = response_json["ParsedResults"]
+                             .map do |parsed_result|
+                parsed_result["ParsedText"]
+              end
+              puts JSON.pretty_generate(parsed_texts).magenta
             end
           end
         end
@@ -248,5 +281,27 @@ namespace :data do
       )
       break unless uri
     end
+  end
+
+  desc "OCR image data:ocr_image[img_url]"
+  task :ocr_image, [:img_url] => :environment do |_task, args|
+    cache_dir = args[:cache_dir] || "tmp/location_scraper"
+    cached = !args[:cached].nil? || false
+    image_url = args[:img_url]
+    (ocrspace_uri, cache_key) = ocrspace_uri_for(image_url)
+    body = fetch_using_cache(
+      ocrspace_uri,
+      cache_dir,
+      cached:
+      cached,
+      cache_key: cache_key,
+    )
+
+    response_json = JSON.parse(body)
+    parsed_texts = response_json["ParsedResults"]
+                   .map do |parsed_result|
+      parsed_result["ParsedText"]
+    end
+    puts JSON.pretty_generate(parsed_texts).magenta
   end
 end
