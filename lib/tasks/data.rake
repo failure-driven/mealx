@@ -55,7 +55,7 @@ end
 
 def ocrspace_uri_for(image_url)
   cache_key = URI.parse(image_url).path
-                 .sub(/jpg$/, "menu.json")
+                 .sub(/png|jpg|jpeg$/, "menu.json")
                  .sub(%r{^/}, "")
                  .gsub(%r{/}, "-")
   ocrspace_uri = URI(
@@ -130,7 +130,7 @@ namespace :data do
 
     uri = URI.parse(args[:start_location])
     loop do
-      puts "fetching uri: #{uri}"
+      # puts "fetching uri: #{uri}"
       body = fetch_using_cache(uri, cache_dir, cached: cached)
       doc = Nokogiri::HTML.parse(body)
       locations = doc
@@ -144,13 +144,8 @@ namespace :data do
         }
       end
       locations.each do |location|
-        # NOTE: URI.escape is obsolete
-        #   https://rubyapi.org/2.7/o/uri/escape
-        #   URI.escape method is obsolete and should not be used. Instead, use CGI.escape,
-        #   URI.encode_www_form or URI.encode_www_form_component depending on your
-        #   specific use case.
         body = fetch_using_cache(
-          URI.parse(URI.escape(location[:link])), # rubocop:disable Lint/UriEscapeUnescape
+          URI.parse(URI::DEFAULT_PARSER.escape(location[:link])), # NOTE: because URI.escape is obsolete
           cache_dir,
           cached: cached,
         )
@@ -160,6 +155,14 @@ namespace :data do
         json_data = JSON.parse(JSON.parse(matched[1]))
         restaurant_id = json_data.dig("pages", "current", "resId").to_s
         name = json_data.dig("pages", "current", "ogTitle")
+        cuisine_string = json_data.dig(
+          "pages",
+          "restaurant",
+          restaurant_id,
+          "sections",
+          "SECTION_BASIC_INFO",
+          "cuisine_string",
+        )
         timings = json_data.dig(
           "pages",
           "restaurant",
@@ -192,6 +195,16 @@ namespace :data do
           "SECTION_RES_CONTACT",
           "longitude",
         )
+        # NOTE: markers on map are same as latitude/longitude above
+        # static_map_url = json_data.dig(
+        #   "pages",
+        #   "restaurant",
+        #   restaurant_id,
+        #   "sections",
+        #   "SECTION_RES_CONTACT",
+        #   "static_map_url",
+        # )
+        # match, map_latitude, map_longitude = /markers=([-\.\d]+),([-\.\d]+)/.match(static_map_url).to_a
         phone = json_data.dig(
           "pages",
           "restaurant",
@@ -201,6 +214,31 @@ namespace :data do
           "phoneDetails",
           "phoneStr",
         )
+        known_for = json_data.dig(
+          "pages",
+          "restaurant",
+          restaurant_id,
+          "sections",
+          "SECTION_RES_DETAILS",
+          "KNOWN_FOR",
+        )
+        top_dishes = json_data.dig(
+          "pages",
+          "restaurant",
+          restaurant_id,
+          "sections",
+          "SECTION_RES_DETAILS",
+          "TOP_DISHES",
+        )
+        highlights = json_data.dig(
+          "pages",
+          "restaurant",
+          restaurant_id,
+          "sections",
+          "SECTION_RES_DETAILS",
+          "HIGHLIGHTS",
+          "highlights",
+        )
         restaurant_details = {
           restaurant_id: restaurant_id,
           timings: timings,
@@ -209,6 +247,10 @@ namespace :data do
           longitude: longitude,
           latitude: latitude,
           phone: phone,
+          cuisine_string: cuisine_string,
+          known_for: known_for,
+          top_dishes: top_dishes,
+          highlights: highlights,
         }
         menu_uri_path = json_data.dig(
           "pages",
@@ -223,13 +265,12 @@ namespace :data do
               uri.scheme,
               "://",
               uri.host,
-              URI.escape(menu_uri_path), # rubocop:disable Lint/UriEscapeUnescape
+              URI::DEFAULT_PARSER.escape(menu_uri_path), # NOTE: because URI.escape is obsolete
             ].join,
           )
-          restaurant_details.merge!({
-                                      menu_url: menu_url.to_s,
-                                    })
-          # binding.pry
+          # restaurant_details.merge!({
+          #                             menu_url: menu_url.to_s,
+          #                           })
           body_menu = fetch_using_cache(menu_url, cache_dir, cached: cached)
           matched = /.*JSON.parse\((.*)\)$/.match body_menu
           if matched && matched[1]
@@ -245,10 +286,16 @@ namespace :data do
                                       .find { |e| e["label"] == "Menu" }
               &.dig("pages")
               &.map { |e| e["url"] }
-            restaurant_details.merge!({
-                                        menu_urls: menu_urls,
-                                      })
+            # restaurant_details.merge!({
+            #                             menu_urls: menu_urls,
+            #                           })
             menu_urls&.each do |menu_image_url|
+              # next # skip OCR for the moment
+              next unless latitude.to_f > -37.811 &&
+                          latitude.to_f < -37.791 &&
+                          longitude.to_f > 144.968 &&
+                          longitude.to_f < 144.995
+
               fetch_using_cache(URI(menu_image_url), cache_dir, cached: cached)
               (ocrspace_uri, cache_key) = ocrspace_uri_for(menu_image_url)
               body = fetch_using_cache(
@@ -259,18 +306,31 @@ namespace :data do
                 cache_key: cache_key,
               )
 
-              response_json = JSON.parse(body)
-              parsed_texts = response_json["ParsedResults"]
-                             .map do |parsed_result|
-                parsed_result["ParsedText"]
+              if body
+                response_json = JSON.parse(body)
+                parsed_texts = response_json["ParsedResults"]
+                               &.map do |parsed_result|
+                  parsed_result["ParsedText"]
+                end
+                if parsed_texts # rubocop:disable Metrics/BlockNesting
+                  restaurant_details["menu_texts"] ||= []
+                  restaurant_details["menu_texts"] << { menu_image_url: menu_image_url, text: parsed_texts.join }
+                end
+                # puts JSON.pretty_generate(parsed_texts).magenta if parsed_texts
               end
-              puts JSON.pretty_generate(parsed_texts).magenta
             end
           end
         end
-        ap restaurant_details
+        # NOTE: Smith St and Brunswick St presinct
+        next unless latitude.to_f > -37.811 &&
+                    latitude.to_f < -37.791 &&
+                    longitude.to_f > 144.968 &&
+                    longitude.to_f < 144.995
+
+        puts restaurant_details.to_json
+        # pp restaurant_details
       end
-      ap locations
+      # pp locations
       uri = URI.parse(
         [
           uri.scheme,

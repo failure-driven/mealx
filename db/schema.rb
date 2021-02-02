@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_16_054229) do
+ActiveRecord::Schema.define(version: 2021_02_01_212121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 2021_01_16_054229) do
     t.string "address"
     t.decimal "latitude", precision: 10, scale: 6, default: "0.0"
     t.decimal "longitude", precision: 10, scale: 6, default: "0.0"
+    t.text "menu_text"
   end
 
   create_table "meals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

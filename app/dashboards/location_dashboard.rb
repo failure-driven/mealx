@@ -13,6 +13,7 @@ class LocationDashboard < Administrate::BaseDashboard
     address: Field::String,
     latitude: Field::String.with_options(searchable: false),
     longitude: Field::String.with_options(searchable: false),
+    menu_text: Field::Text,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -24,7 +25,7 @@ class LocationDashboard < Administrate::BaseDashboard
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [:id, :name, :address, :latitude, :longitude].freeze
+  SHOW_PAGE_ATTRIBUTES = [:id, :name, :address, :latitude, :longitude, :menu_text].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed

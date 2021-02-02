@@ -9,5 +9,8 @@ module Types
     field :meals,
           resolver: Resolvers::Meals,
           description: "Find Meals by fuzzy match"
+    field :menu_search,
+          resolver: Resolvers::MenuSearch,
+          description: "Find locations by menu search"
   end
 end

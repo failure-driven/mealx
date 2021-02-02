@@ -5,5 +5,6 @@ module Types
     field :address, String, null: true
     field :latitude, String, null: true
     field :longitude, String, null: true
+    field :menu_text, String, null: true
   end
 end

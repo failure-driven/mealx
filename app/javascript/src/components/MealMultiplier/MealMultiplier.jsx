@@ -5,6 +5,7 @@ import { ApolloProvider, Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
 
 import ApolloClient from '../../api/ApolloClient';
+import Search from './Search';
 
 const GET_MEALS = gql`
   query Meals($query: String!) {
@@ -160,13 +161,19 @@ function Meals({ meal }) {
 }
 
 Meals.propTypes = {
-  meal: object.isRequired,
+  meal: object,
+};
+
+Meals.defaultProps = {
+  meal: {},
 };
 
 export default function MealMultiplier() {
   return (
     <Router>
       <Meals path="multiplier" />
+      <Search path="multiplier/search" />
+      <Search path="multiplier/search/:query" />
       <Meals path="multiplier/:meal" />
     </Router>
   );
