@@ -168,12 +168,12 @@ Meals.defaultProps = {
   meal: {},
 };
 
-export default function MealMultiplier() {
+export default function MealMultiplier(params) {
   return (
     <Router>
       <Meals path="multiplier" />
-      <Search path="multiplier/search" />
-      <Search path="multiplier/search/:query" />
+      <Search path="multiplier/search" mapKey={params.options.googleApiKey} />
+      <Search path="multiplier/search/:query" mapKey={params.options.googleApiKey} />
       <Meals path="multiplier/:meal" />
     </Router>
   );

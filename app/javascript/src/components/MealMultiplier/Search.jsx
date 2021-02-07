@@ -7,6 +7,7 @@ import { gql } from 'apollo-boost';
 import ApolloClient from '../../api/ApolloClient';
 import QueryInput from './Search/QueryInput';
 import LocationResult from './Search/LocationResult';
+import Map from './Map';
 
 const MENU_SEARCH = gql`
   query MenuSearch($query: String!) {
@@ -23,7 +24,7 @@ const MENU_SEARCH = gql`
   }
 `;
 
-export default function Search({ query: inputQuery }) {
+export default function Search({ query: inputQuery, mapKey }) {
   const navigate = useNavigate();
   const [queryInput, setQueryInput] = useState(
     inputQuery.replaceAll('+', ' ').replace(/\s+/, ' '),
@@ -65,19 +66,20 @@ export default function Search({ query: inputQuery }) {
             {({ loading, error, data }) => {
               if (loading) return 'loading ...';
               if (error) return `Error! ${query} ${error.message}`;
-              return data.menuSearch.locations.map(
-                ({
-                  id, name, address, menuText,
-                }) => (
-                  <LocationResult
-                    key={id}
-                    name={name}
-                    address={address}
-                    menuText={menuText}
-                    query={query}
-                  />
-                ),
-              );
+              return <Map mapKey={mapKey} locations={data.menuSearch.locations} />;
+              // return data.menuSearch.locations.map(
+              //   ({
+              //     id, name, address, menuText,
+              //   }) => (
+              //     <LocationResult
+              //       key={id}
+              //       name={name}
+              //       address={address}
+              //       menuText={menuText}
+              //       query={query}
+              //     />
+              //   ),
+              // );
             }}
           </Query>
         </div>
