@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import GoogleMapReact from 'google-map-react';
+import { string, object } from 'prop-types';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
+AnyReactComponent.propTypes = {
+  text: string.isRequired,
+};
 
 export default function Map({ mapKey, locations }) {
   const defaultProps = {
@@ -27,3 +31,8 @@ export default function Map({ mapKey, locations }) {
     </div>
   );
 }
+
+Map.propTypes = {
+  mapKey: string.isRequired,
+  locations: object.isRequired,
+};

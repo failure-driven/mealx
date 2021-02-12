@@ -26,6 +26,7 @@ const MENU_SEARCH = gql`
 
 export default function Search({ query: inputQuery, mapKey }) {
   const navigate = useNavigate();
+  const [showList, setShowList] = useState(false);
   const [queryInput, setQueryInput] = useState(
     inputQuery.replaceAll('+', ' ').replace(/\s+/, ' '),
   );
@@ -60,26 +61,46 @@ export default function Search({ query: inputQuery, mapKey }) {
       </div>
       <hr />
       <div className="row">
+        <div className="col-sm-12">
+          <button
+            type="button"
+            className={`btn btn${showList ? '-outline' : ''}-info float-right`}
+            onClick={() => setShowList(false)}
+          >
+            <i className="fas fa-map" />
+          </button>
+          <button
+            type="button"
+            className={`btn btn${showList ? '' : '-outline'}-info float-right mr-2`}
+            onClick={() => setShowList(true)}
+          >
+            <i className="fas fa-list" />
+          </button>
+        </div>
+      </div>
+      <div className="row">
         <div className="col-sm-1" />
         <div className="col-sm-10">
           <Query query={MENU_SEARCH} variables={{ query: query || '' }}>
             {({ loading, error, data }) => {
               if (loading) return 'loading ...';
               if (error) return `Error! ${query} ${error.message}`;
+              if (showList) {
+                return data.menuSearch.locations.map(
+                  ({
+                    id, name, address, menuText,
+                  }) => (
+                    <LocationResult
+                      key={id}
+                      name={name}
+                      address={address}
+                      menuText={menuText}
+                      query={query}
+                    />
+                  ),
+                );
+              }
               return <Map mapKey={mapKey} locations={data.menuSearch.locations} />;
-              // return data.menuSearch.locations.map(
-              //   ({
-              //     id, name, address, menuText,
-              //   }) => (
-              //     <LocationResult
-              //       key={id}
-              //       name={name}
-              //       address={address}
-              //       menuText={menuText}
-              //       query={query}
-              //     />
-              //   ),
-              // );
             }}
           </Query>
         </div>
@@ -90,6 +111,7 @@ export default function Search({ query: inputQuery, mapKey }) {
 
 Search.propTypes = {
   query: string,
+  mapKey: string.isRequired,
 };
 Search.defaultProps = {
   query: '',

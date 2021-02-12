@@ -21,6 +21,13 @@ make build
 rails server
 open http://localhost:3000
 ```
+
+give a user admin priveledges
+
+```
+rails runner 'User.find_by(email: ARGV).update!(user_actions: { "admin": { "can_administer": true }})' m@m.m
+```
+
 # README
 
 This README would normally document whatever steps are necessary to get the
