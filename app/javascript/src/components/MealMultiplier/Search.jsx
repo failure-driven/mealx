@@ -92,6 +92,7 @@ export default function Search({ query: inputQuery, mapKey }) {
                   }) => (
                     <LocationResult
                       key={id}
+                      id={id}
                       name={name}
                       address={address}
                       menuText={menuText}

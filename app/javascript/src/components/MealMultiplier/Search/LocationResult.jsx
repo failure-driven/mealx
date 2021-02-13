@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import uuid from 'react-uuid';
 import { string } from 'prop-types';
 import Highlighter from 'react-highlight-words';
+import {
+  Button, Modal, ModalHeader, ModalBody, ModalFooter, Tooltip,
+} from 'reactstrap';
 
 export default function LocationResult({
-  name, address, menuText, query,
+  id: locationId, name, address, menuText, query,
 }) {
   const matchingSnippets = () => {
     const offset = 60;
@@ -36,13 +39,37 @@ export default function LocationResult({
     return snippets.length === 0 ? [{ id: uuid(), text: menuText }] : snippets;
   };
 
+  const [modal, setModal] = useState(false);
+  const toggle = (event) => { setModal(!modal); event.preventDefault(); };
+
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const toggleMenuToolTip = () => setTooltipOpen(!tooltipOpen);
   return (
     <>
       <div className="row">
         <div className="col-sm-3">{name}</div>
-        <div className="col-sm-3" />
+        <div className="col-sm-2" />
         <div className="col-sm-6">{address}</div>
+        <div className="col-sm-1">
+          <button type="button" className="btn btn-outline-secondary" onClick={toggle} id={`showMenu${locationId}`}>
+            <i className="fas fa-th-list" />
+          </button>
+          <Tooltip placement="right" isOpen={tooltipOpen} target={`showMenu${locationId}`} toggle={toggleMenuToolTip}>
+            Show Menu
+          </Tooltip>
+        </div>
       </div>
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>Menu</ModalHeader>
+        <ModalBody>
+          <pre>
+            {menuText}
+          </pre>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={toggle}>Close</Button>
+        </ModalFooter>
+      </Modal>
       <div className="row">
         <div className="col">
           <ul>
@@ -64,6 +91,7 @@ export default function LocationResult({
 }
 
 LocationResult.propTypes = {
+  id: string.isRequired,
   name: string.isRequired,
   address: string.isRequired,
   menuText: string.isRequired,
