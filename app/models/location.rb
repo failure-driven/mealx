@@ -8,6 +8,9 @@ class Location < ApplicationRecord
     against: [:menu_text],
     using: {
       tsearch: { prefix: true },
+      trigram: {
+        word_similarity: true,
+      },
     },
   )
 end
