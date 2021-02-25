@@ -12,5 +12,8 @@ module Types
     field :menu_search,
           resolver: Resolvers::MenuSearch,
           description: "Find locations by menu search"
+    field :search_suggestions,
+          resolver: Resolvers::SearchSuggestion,
+          description: "Search suggestions for input text"
   end
 end

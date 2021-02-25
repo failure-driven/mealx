@@ -24,6 +24,14 @@ const MENU_SEARCH = gql`
   }
 `;
 
+const SEARCH_SUGGESTIONS = gql`
+  query SearchSuggestions($searchText: String!) {
+    searchSuggestions(searchText: $searchText) {
+      text
+    }
+  }
+`;
+
 export default function Search({ query: inputQuery, mapKey }) {
   const navigate = useNavigate();
   const [showList, setShowList] = useState(false);
@@ -33,12 +41,11 @@ export default function Search({ query: inputQuery, mapKey }) {
   const [query, setQuery] = useState(
     inputQuery.replaceAll('+', ' ').replace(/\s+/, ' '),
   );
-  const [foundLocations, setFoundLocations] = useState([]);
   const [locations, setLocations] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      setLocations(foundLocations);
       const whitespace = /\s+/gi;
       navigate(
         `/multiplier/search/${queryInput.trim().replaceAll(whitespace, '+')}`,
@@ -48,9 +55,8 @@ export default function Search({ query: inputQuery, mapKey }) {
   };
 
   const handleOnChange = (event) => {
-    const queryText = event.target.value;
-    setQueryInput(queryText);
-    setQuery(queryText);
+    setQuery(queryInput);
+    setQueryInput(event.target.value);
   };
 
   return (
@@ -62,6 +68,8 @@ export default function Search({ query: inputQuery, mapKey }) {
             query={queryInput}
             handleKeyDown={handleKeyDown}
             handleOnChange={handleOnChange}
+            setQueryInput={setQueryInput}
+            suggestions={suggestions}
           />
           <small>hit enter to perform search</small>
         </div>
@@ -114,10 +122,15 @@ export default function Search({ query: inputQuery, mapKey }) {
         {({ loading, error, data }) => {
           if (loading) return 'loading ...';
           if (error) return `Error! ${query} ${error.message}`;
-          setFoundLocations(data.menuSearch.locations);
-          if (locations.length === 0) {
-            setLocations(data.menuSearch.locations);
-          }
+          setLocations(data.menuSearch.locations);
+          return <></>;
+        }}
+      </Query>
+      <Query query={SEARCH_SUGGESTIONS} variables={{ searchText: query }}>
+        {({ loading, error, data }) => {
+          if (loading) return 'loading ...';
+          if (error) return `Error! ${query} ${error.message}`;
+          setSuggestions(data.searchSuggestions);
           return <></>;
         }}
       </Query>
