@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_25_000000) do
+ActiveRecord::Schema.define(version: 2021_02_25_000001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_000000) do
     t.decimal "latitude", precision: 10, scale: 6, default: "0.0"
     t.decimal "longitude", precision: 10, scale: 6, default: "0.0"
     t.text "menu_text"
+    t.index "to_tsvector('simple'::regconfig, COALESCE(menu_text, ''::text))", name: "tsearch_index_locations_on_menu_text", using: :gin
   end
 
   create_table "meals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

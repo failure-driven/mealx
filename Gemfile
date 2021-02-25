@@ -56,6 +56,9 @@ gem "sendgrid-ruby"
 gem "graphiql-rails", group: :development
 gem "graphql"
 
+# better search
+gem "pg_search"
+
 # rake tasks
 gem 'colorize'
 
