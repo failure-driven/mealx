@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import {
-  withScriptjs, withGoogleMap, GoogleMap, Marker,
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker,
 } from 'react-google-maps';
 import { string, object } from 'prop-types';
 import InfoBox from 'react-google-maps/lib/components/addons/InfoBox';
@@ -14,20 +17,20 @@ const Location = ({ name, lat, lng }) => {
       position={{ lat: parseFloat(lat), lng: parseFloat(lng) }}
       onClick={() => setIsOpen(!isOpen)}
     >
-      {
-        isOpen && (
-        <InfoBox
-          onClickClose={() => setIsOpen(!isOpen)}
-        >
-          <div style={{
-            background: 'yellow', padding: '12px', fontSize: '16px', fontColor: '#08233B',
-          }}
+      {isOpen && (
+        <InfoBox onClickClose={() => setIsOpen(!isOpen)}>
+          <div
+            style={{
+              background: 'yellow',
+              padding: '12px',
+              fontSize: '16px',
+              fontColor: '#08233B',
+            }}
           >
             {name}
           </div>
         </InfoBox>
-        )
-      }
+      )}
     </Marker>
   );
 };
@@ -38,31 +41,35 @@ Location.propTypes = {
   lng: string.isRequired,
 };
 
-const MyMapComponent = withScriptjs(withGoogleMap(({ locations }) => {
-  const defaultProps = {
-    center: {
-      lat: -37.803,
-      lng: 144.98,
-    },
-    zoom: 15,
-  };
+const MyMapComponent = withScriptjs(
+  withGoogleMap(({ locations }) => {
+    const defaultProps = {
+      center: {
+        lat: -37.803,
+        lng: 144.98,
+      },
+      zoom: 15,
+    };
 
-  return (
-    <GoogleMap
-      defaultCenter={defaultProps.center}
-      defaultZoom={defaultProps.zoom}
-    >
-      {locations.map(({
-        id, latitude, longitude, name,
-      }) => <Location key={id} name={name} lat={latitude} lng={longitude} />)}
-    </GoogleMap>
-  );
-}));
+    return (
+      <GoogleMap
+        defaultCenter={defaultProps.center}
+        defaultZoom={defaultProps.zoom}
+      >
+        {locations.map(({
+          id, latitude, longitude, name,
+        }) => (
+          <Location key={id} name={name} lat={latitude} lng={longitude} />
+        ))}
+      </GoogleMap>
+    );
+  }),
+);
 
 export default function Map({ mapKey, locations }) {
   return (
     // Important! Always set the container height explicitly
-    <div style={{ height: '100vh', width: '100%' }}>
+    <div style={{ height: '380px', width: '100%' }}>
       <MyMapComponent
         googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${mapKey}&v=3.exp&libraries=geometry,drawing,places`}
         loadingElement={<div style={{ height: '100%' }} />}

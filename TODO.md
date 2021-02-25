@@ -12,6 +12,11 @@
 - [ ] location as a hierarchy using closure tree gem?
 - [ ] secure flipper for feature flipping
   - https://medium.com/@ppbruna/feature-flags-using-ruby-on-rails-59ca93195309
+- [ ] autocomplete
+  naive data set
+  ```
+  Location.all.map{|l| l.menu_text }.join("\n").scan(/\w+|\W/).map(&:downcase).uniq.sort.filter{|w| w =~ /we/}
+  ```
 
 **SS**
 

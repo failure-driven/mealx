@@ -1,14 +1,18 @@
 import React from 'react';
 import { func, string } from 'prop-types';
 
-export default function QueryInput({ query, setQuery, handleKeyDown }) {
+export default function QueryInput({
+  query,
+  handleKeyDown,
+  handleOnChange,
+}) {
   return (
     <form>
       <input
         className="form-control"
         placeholder="Type a meal: eggs, burger, ..."
         value={query}
-        onChange={(event) => setQuery(event.target.value)}
+        onChange={handleOnChange}
         onKeyDown={handleKeyDown}
       />
     </form>
@@ -17,6 +21,6 @@ export default function QueryInput({ query, setQuery, handleKeyDown }) {
 
 QueryInput.propTypes = {
   query: string.isRequired,
-  setQuery: func.isRequired,
   handleKeyDown: func.isRequired,
+  handleOnChange: func.isRequired,
 };
