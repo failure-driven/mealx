@@ -17,6 +17,30 @@ class HomeController < ApplicationController
     end
   end
 
+  def enable_flip
+    # TODO: force a login
+    begin
+      jwt_payload = JWT.decode(params[:token], Rails.application.secrets.secret_key_base).first
+      current_user_id = jwt_payload["id"]
+      Flipper[:beta_search].enable current_user if current_user && current_user.id == current_user_id
+    rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
+      # head :unauthorized
+    end
+    redirect_to root_path
+  end
+
+  def disable_flip
+    # TODO: force a login
+    begin
+      jwt_payload = JWT.decode(params[:token], Rails.application.secrets.secret_key_base).first
+      current_user_id = jwt_payload["id"]
+      Flipper[:beta_search].disable current_user if current_user && current_user.id == current_user_id
+    rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
+      # head :unauthorized
+    end
+    redirect_to root_path
+  end
+
   private
 
   def variants

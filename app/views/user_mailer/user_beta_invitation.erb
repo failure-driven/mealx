@@ -1,0 +1,13 @@
+<p>Hi there,</p>
+
+<p>You are one of the lucky ones to get a Beta invitations to MealX</p>
+
+<p>Accept the beta in the next 24 hours and you will multiply your meal experience</p>
+
+<%= render partial: "email_safe_button", locals: {
+  label: "ACCEPT BETA",
+  href: enable_flip_home_index_url(token: @token),
+  align: "center"
+} %>
+
+<p>the Meal multiplier</p>

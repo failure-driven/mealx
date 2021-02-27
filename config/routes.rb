@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       member do
         get :send_user_registration
         get :send_admin_invitation
+        get :send_beta_invitation
       end
     end
 
@@ -32,6 +33,12 @@ Rails.application.routes.draw do
   resources :multiplier, only: [:index]
   get "/multiplier/*all" => "multiplier#index"
 
-  resources :home, only: [:show]
+  resources :home, only: [:show] do
+    collection do
+      get :enable_flip
+      get :disable_flip
+    end
+  end
+
   root to: "home#index"
 end

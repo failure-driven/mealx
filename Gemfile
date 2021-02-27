@@ -46,6 +46,8 @@ gem "devise"
 gem "administrate"
 gem "administrate-field-jsonb"
 
+gem "jwt"
+
 # email
 gem "premailer-rails"
 

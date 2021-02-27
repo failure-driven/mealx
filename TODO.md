@@ -2,6 +2,15 @@
 
 **MM**
 
+- [ ] beta toggle enable
+  ```
+  JWT.encode({id: User.first.id, exp: 1.day.from_now.to_i}, Rails.application.secrets.secret_key_base)
+
+  pp Flipper::Adapters::ActiveRecord::Feature.all
+  pp Flipper::Adapters::ActiveRecord::Gate.all
+  ```
+
+- [ ] how do we want this to break with no google? no internet?
 - [ ] System Time data
   - [x] generate
   - [ ] db:seeds to deploy and build

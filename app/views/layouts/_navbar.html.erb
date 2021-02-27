@@ -2,7 +2,7 @@
   <a class="navbar-brand" href="/">MealX</a>
 
   <div class="collapse navbar-collapse" id="navbarContent">
-    <% if signed_in? %>
+    <% if signed_in? && current_user && Flipper[:beta_search].enabled?(current_user) %>
       <ul class="navbar-nav">
         <% if current_user.user_actions&.dig("admin", "can_administer") %>
           <li class="nav-item">
