@@ -1,5 +1,27 @@
 # TODO
 
+Multiplier ui
+- [ ] map reload is now an issue again?
+- [ ] autosuggest needs to work properly - ie pre fill, search and hit enter to work
+- [ ] style menu + map + search - preview menu
+- [ ] click on map & show restaurant working
+- [ ] fix the typeahead resolver using multisearch table?
+  mealx/app/graphql/resolvers/search_suggestion.rb
+Data
+- [ ] MM  re fetch data, allow images of menu items to be shown - confirm what we
+  do and don't have menu items for
+Beta signup
+- [ ] MM seo of likely terms
+- [ ] domain name
+- [ ] MM/SS landing page + signup with locaiton
+- ** $$$ for ads to see who signs up
+- [ ] what do they get straight away?
+- [ ] eamil signups more info
+- [ ] setup beta customers
+- [ ] user testing with paid service
+- [ ] auto record some user sessions automatically
+- [ ] decide what next
+
 **MM**
 
 - [ ] beta toggle enable

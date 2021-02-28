@@ -44,19 +44,18 @@ export default function Search({ query: inputQuery, mapKey }) {
   const [locations, setLocations] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      const whitespace = /\s+/gi;
-      navigate(
-        `/multiplier/search/${queryInput.trim().replaceAll(whitespace, '+')}`,
-      );
-      event.preventDefault();
-    }
+  const performMapLocationSearch = (value) => {
+    const stringValue = value.join(' ');
+    setQueryInput(stringValue);
+    setQuery(stringValue);
+    const whitespace = /\s+/gi;
+    navigate(
+      `/multiplier/search/${stringValue.trim().replaceAll(whitespace, '+')}`,
+    );
   };
 
-  const handleOnChange = (event) => {
-    setQuery(queryInput);
-    setQueryInput(event.target.value);
+  const typeAheadSearch = (value) => {
+    setQueryInput(value);
   };
 
   return (
@@ -66,10 +65,9 @@ export default function Search({ query: inputQuery, mapKey }) {
         <div className="col-sm-8">
           <QueryInput
             query={queryInput}
-            handleKeyDown={handleKeyDown}
-            handleOnChange={handleOnChange}
-            setQueryInput={setQueryInput}
+            performMapLocationSearch={performMapLocationSearch}
             suggestions={suggestions}
+            typeAheadSearch={typeAheadSearch}
           />
           <small>hit enter to perform search</small>
         </div>
@@ -126,10 +124,10 @@ export default function Search({ query: inputQuery, mapKey }) {
           return <></>;
         }}
       </Query>
-      <Query query={SEARCH_SUGGESTIONS} variables={{ searchText: query }}>
+      <Query query={SEARCH_SUGGESTIONS} variables={{ searchText: queryInput }}>
         {({ loading, error, data }) => {
           if (loading) return 'loading ...';
-          if (error) return `Error! ${query} ${error.message}`;
+          if (error) return `Error! ${queryInput} ${error.message}`;
           setSuggestions(data.searchSuggestions);
           return <></>;
         }}

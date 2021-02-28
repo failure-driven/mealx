@@ -1,33 +1,28 @@
 import React from 'react';
 import { array, func, string } from 'prop-types';
-import Autosuggest from 'react-autosuggest';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 
-const renderSuggestion = (suggestion) => <div>{suggestion.text}</div>;
 export default function QueryInput({
   query,
-  handleKeyDown,
-  handleOnChange,
-  setQueryInput,
+  performMapLocationSearch,
   suggestions,
+  typeAheadSearch,
 }) {
   const inputProps = {
-    className: 'form-control',
+    autoFocus: true,
     placeholder: 'Type a meal: eggs, burger, ...',
     value: query,
-    onChange: handleOnChange,
-    onKeyDown: handleKeyDown,
   };
   return (
     <form>
-      <Autosuggest
-        suggestions={suggestions}
-        onSuggestionsFetchRequested={({ value }) => {
-          setQueryInput(value);
-        }}
-        onSuggestionsClearRequested={() => {}}
-        getSuggestionValue={(suggestion) => suggestion.text}
-        renderSuggestion={renderSuggestion}
+      <AsyncTypeahead
+        id="meal-typeahead"
         inputProps={inputProps}
+        minLength={0}
+        onChange={performMapLocationSearch}
+        onSearch={typeAheadSearch}
+        // onInputChange={(text) => {console.log("reset for blank if text.length === 0")}}
+        options={suggestions.map((suggestion) => suggestion.text)}
       />
     </form>
   );
@@ -35,8 +30,7 @@ export default function QueryInput({
 
 QueryInput.propTypes = {
   query: string.isRequired,
-  handleKeyDown: func.isRequired,
-  handleOnChange: func.isRequired,
-  setQueryInput: func.isRequired,
+  performMapLocationSearch: func.isRequired,
   suggestions: array.isRequired,
+  typeAheadSearch: func.isRequired,
 };
