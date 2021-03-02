@@ -4,7 +4,8 @@ class HomeController < ApplicationController
       @variant = variants.sample
       @name = @variant.to_s.humanize
     else
-      @variant = :coming_soon
+      # @variant = :coming_soon
+      @variant = :landing
     end
   end
 

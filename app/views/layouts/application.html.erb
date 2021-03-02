@@ -11,11 +11,12 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="landing-container">
     <%= render partial: 'layouts/navbar' %>
     <main class="container-fluid">
       <%= flash_messages %>
       <%= yield %>
     </main>
+    <%= render partial: 'layouts/footer' %>
   </body>
 </html>

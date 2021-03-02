@@ -1,0 +1,110 @@
+<section>
+  <div class="jumbotron bg-secondary text-white">
+    <div class="container">
+      <div>
+        <h1 class="display-text stronger">Meal X</h1>
+      </div>
+      <p class="display-text">
+        the meal multiplier
+      </p>
+      <div>
+      <%= link_to 'Sign up for free', new_user_registration_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+<section>
+  <div class="jumbotron">
+    <div>
+      We flipped the way you will find food
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="jumbotron" style="overflow: hidden;">
+    <div>
+      <h1 class="display-text stronger">Meals + Social</h1>
+    </div>
+    <p class="display-text">
+      Take your social meal eating and sharing to the next level with direct integration in MealX <i>(coming soon)</i>
+    </p>
+    <div class="d-flex justify-content-around mt-5">
+      <div class="social-integration" style="color: black;"><i class="fab fa-twitter"></i></div>
+      <div class="social-integration" style="color: black;"><i class="fab fa-instagram"></i></div>
+      <div class="social-integration" style="color: black;"><i class="fab fa-foursquare"></i></div>
+      <div class="social-integration" style="color: black;"><i class="fab fa-facebook"></i></div>
+      <div class="social-integration" style="color: black;"><i class="fab fa-uber"></i></div>
+    </div>
+  </div>
+</section>
+
+<section class="mb-5">
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <% quotes = [
+      {
+        quote: "I often crave food and now I crave MealX to find the food I crave!",
+        name: "anonymous",
+      },
+      {
+        quote: "MealX has turned the food industry on it's head!",
+        name: "anonymous",
+      },
+      {
+        quote: "Not only can I find the combination of meals I want, but a combination that suits my friends as well!",
+        name: "anonymous",
+      },
+    ] %>
+    <ol class="carousel-indicators">
+      <% quotes.each_with_index do |_quote, index| %>
+        <i data-target="#carouselExampleIndicators" data-slide-to="<%= index %>" class="<%= index == 0 ? "active" : "" %> far fa-circle"></i>
+      <% end %>
+    </ol>
+    <div class="carousel-inner">
+      <% quotes.each_with_index do |quote, index| %>
+        <div class="carousel-item <%= index == 0 ? "active" : "" %>">
+          <div class="quote">
+            <div class="user"></div>
+            <div class="card">
+              <div class="card-body">
+                <blockquote>“<%= quote[:quote] %>”</blockquote>
+              </div>
+              <div class="card-annotation">
+                <%= quote[:name] %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <div class="carousel-control-wrapper">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+      </div>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <div class="carousel-control-wrapper">
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+      </div>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</section>
+
+<section>
+  <div class="jumbotron flex-column">
+    <div class="mb-5">
+      check when Meal X will be available in your area
+    </div>
+    <input class="form-control" />
+    <div class="d-flex justify-content-center mt-5">
+      <%= link_to "Register for early beta", new_user_registration_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+</section>
+
+</div>
