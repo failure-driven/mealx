@@ -20,3 +20,13 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 
 @import "coming_soon";
 @import "landing";
+
+body {
+  font-family: "Montserrat", sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .container-fluid {
+    flex: 1;
+  }
+}

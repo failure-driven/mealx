@@ -7,10 +7,14 @@ Multiplier ui
 - [ ] click on map & show restaurant working
 - [ ] fix the typeahead resolver using multisearch table?
   mealx/app/graphql/resolvers/search_suggestion.rb
+- [ ] lock down http://localhost:3000/flipper
 Data
 - [ ] MM  re fetch data, allow images of menu items to be shown - confirm what we
   do and don't have menu items for
 Beta signup
+- [ ] password optional
+- [ ] confirmable
+- [ ] remove unfinished elements
 - [ ] MM seo of likely terms
 - [ ] domain name
 - [ ] MM/SS landing page + signup with locaiton

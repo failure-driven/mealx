@@ -43,6 +43,7 @@ module Admin
       UserMailer
         .with(
           user: requested_resource,
+          reset_token: requested_resource.send(:set_reset_password_token),
           token: generate_jwt_token_for(requested_resource),
         )
         .user_beta_invitation

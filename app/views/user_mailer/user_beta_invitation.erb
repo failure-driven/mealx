@@ -6,7 +6,7 @@
 
 <%= render partial: "email_safe_button", locals: {
   label: "ACCEPT BETA",
-  href: enable_flip_home_index_url(token: @token),
+  href: enable_flip_home_index_url(token: @token, reset_token: @reset_token),
   align: "center"
 } %>
 

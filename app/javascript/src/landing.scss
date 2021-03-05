@@ -1,13 +1,5 @@
-.landing-container {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  .container-fluid {
-    flex: 1;
-  }
+.pre-container {
   .jumbotron {
-    margin-left: -15px;
-    margin-right: -15px;
     border-radius: 0;
   }
 }
@@ -21,7 +13,7 @@
   }
 }
 
-.landing-footer {
+.footer {
   background-color: rgb(250, 251, 252);
   font-size: 12px;
   a {
