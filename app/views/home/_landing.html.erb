@@ -1,14 +1,32 @@
 <% content_for :pre_container do %>
   <div class="jumbotron bg-secondary text-white">
     <div class="container">
-      <div>
-        <h1 class="display-text stronger">Meal X</h1>
-      </div>
-      <p class="display-text">
-        the meal multiplier
-      </p>
-      <div>
-      <%= link_to 'Sign up for free', new_user_registration_path, class: "btn btn-primary" %>
+      <div class="row">
+        <div class="col-lg-3">
+          <div>
+            <h1 class="display-text stronger">Meal X</h1>
+          </div>
+          <p class="display-text">
+            the meal multiplier
+          </p>
+          </div>
+            <div class="col-lg-9">
+              <input
+                class="form-control"
+                placeholder="check when Meal X will be available in your area"
+                autofocus>
+              <div class="d-flex justify-content-center mt-5">
+                <% if !signed_in? %>
+                  <%= link_to(
+                    "Register for early beta",
+                    new_user_registration_path,
+                    class: "btn btn-primary"
+                    )%>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

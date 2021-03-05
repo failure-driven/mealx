@@ -15,6 +15,7 @@ Beta signup
 - [ ] password optional
 - [ ] confirmable
 - [ ] remove unfinished elements
+- [ ] move the flash message to hover over the pre-container
 - [ ] MM seo of likely terms
 - [ ] domain name
 - [ ] MM/SS landing page + signup with locaiton
