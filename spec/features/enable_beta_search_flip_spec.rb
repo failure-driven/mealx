@@ -8,12 +8,12 @@ feature "Enable beta search flip", js: true do
 
     Then "the see a sign up call to action" do
       wait_for do
-        page.find_all(".pre-container .jumbotron a").map(&:text)
+        page.find_all(".pre-container .jumbotron button").map(&:text)
       end.to eq(["Register for early beta"])
     end
 
     When "Whiteny registers" do
-      page.find(".pre-container .jumbotron a", text: "Register for early beta").click
+      page.find(".pre-container .jumbotron button", text: "Register for early beta").click
       page.find("form.new_user").fill_in("Email", with: "whitney.wolfe@bumble.com")
       page.find("form.new_user").find('input[type="submit"]').click
     end

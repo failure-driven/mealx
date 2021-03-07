@@ -52,3 +52,9 @@ body {
     }
   }
 }
+#error_explanation {
+  @extend .invalid-feedback;
+  display: inherit;
+  @extend .alert;
+  @extend .alert-danger;
+}
