@@ -35,8 +35,8 @@ feature "Enable beta search flip", js: true do
       open_email "whitney.wolfe@bumble.com"
       wait_for do
         current_email.text
-      end.to match(/Welcome whitney.wolfe@bumble.com!.*confirm.*link below: Confirm my account.*/)
-      current_email.click_link "Confirm my account"
+      end.to match(/Welcome whitney.wolfe@bumble.com!.*confirm.*link below: CONFIRM MY ACCOUNT.*/)
+      current_email.click_link "CONFIRM MY ACCOUNT"
       clear_emails
     end
 

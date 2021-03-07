@@ -1,0 +1,13 @@
+<p>Welcome <%= @email %>!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p>
+  <%= render partial: "user_mailer/email_safe_button", locals: {
+    label: "CONFIRM MY ACCOUNT",
+    href: confirmation_url(@resource, confirmation_token: @token),
+    align: "center"
+  } %>
+</p>
+
+<p>the Meal multiplier</p>
