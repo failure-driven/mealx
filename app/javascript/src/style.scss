@@ -31,3 +31,24 @@ body {
     flex: 1;
   }
 }
+
+.devise-form {
+  form {
+    margin-bottom: 1.25em;
+  }
+  .field {
+    @extend .form-group;
+  }
+  input {
+    &[type="email"], &[type="password"] {
+      @extend .form-control;
+    }
+    &[type="checkbox"] {
+      // @extend .form-check-input;
+    }
+    &[type="submit"] {
+      @extend .btn;
+      @extend .btn-primary;
+    }
+  }
+}

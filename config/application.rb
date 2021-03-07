@@ -34,6 +34,7 @@ module Mealx
 
     config.to_prepare do
       Devise::Mailer.layout "mailer"
+      DeviseController.layout "application_devise"
     end
 
     # Don't generate system test files.

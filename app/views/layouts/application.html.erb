@@ -15,14 +15,18 @@
     <%= render partial: 'layouts/navbar' %>
     <div class="position-relative">
       <div class="position-absolute col mt-3">
-        <%= flash_messages %>
+        <div class="container">
+          <div class="col">
+              <%= flash_messages %>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pre-container">
       <%= yield :pre_container %>
     </div>
     <main class="container-fluid">
-      <%= yield %>
+      <%= content_for?(:content) ? yield(:content) : yield %>
     </main>
     <%= render partial: 'layouts/footer' %>
   </body>
