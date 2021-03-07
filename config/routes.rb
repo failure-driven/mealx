@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   end
   devise_for :users, controllers: {
     registrations: "users/registrations",
+    confirmations: "users/confirmations",
   }
 
   mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql" if Rails.env.development?
@@ -40,6 +41,11 @@ Rails.application.routes.draw do
       get :enable_flip
       get :disable_flip
     end
+  end
+
+  authenticated :user do
+    get "/preview" => "home#show", id: :preview
+    get "/" => redirect("/preview")
   end
 
   root to: "home#index"

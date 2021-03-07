@@ -17,6 +17,10 @@ class UserDashboard < Administrate::BaseDashboard
     remember_created_at: Field::DateTime,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    confirmation_token: Field::String,
+    confirmed_at: Field::DateTime,
+    confirmation_sent_at: Field::DateTime,
+    unconfirmed_email: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -28,12 +32,32 @@ class UserDashboard < Administrate::BaseDashboard
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [:id, :email, :user_actions, :created_at, :updated_at].freeze
+  SHOW_PAGE_ATTRIBUTES = [
+    :id,
+    :email,
+    :user_actions,
+    :reset_password_token,
+    :reset_password_sent_at,
+    :remember_created_at,
+    :confirmation_token,
+    :confirmed_at,
+    :confirmation_sent_at,
+    :unconfirmed_email,
+    :created_at,
+    :updated_at,
+  ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  FORM_ATTRIBUTES = [:email, :user_actions].freeze
+  FORM_ATTRIBUTES = [
+    :email,
+    :reset_password_token,
+    :remember_created_at,
+    :user_actions,
+    :confirmation_token,
+    :unconfirmed_email,
+  ].freeze
 
   # COLLECTION_FILTERS
   # a hash that defines filters that can be used while searching via the search

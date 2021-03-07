@@ -55,6 +55,6 @@ class HomeController < ApplicationController
   private
 
   def variants
-    [:dish_finder, :fish_the_dish, :meal_mate, :mealx]
+    [:preview, :dish_finder, :fish_the_dish, :meal_mate, :mealx]
   end
 end

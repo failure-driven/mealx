@@ -13,11 +13,15 @@
 
   <body>
     <%= render partial: 'layouts/navbar' %>
+    <div class="position-relative">
+      <div class="position-absolute col mt-3">
+        <%= flash_messages %>
+      </div>
+    </div>
     <div class="pre-container">
       <%= yield :pre_container %>
     </div>
     <main class="container-fluid">
-      <%= flash_messages %>
       <%= yield %>
     </main>
     <%= render partial: 'layouts/footer' %>

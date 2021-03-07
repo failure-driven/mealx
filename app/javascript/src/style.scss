@@ -8,6 +8,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 
 // devise alert to extend bootstrap colours
 .alert {
+  z-index: $zindex-popover;
   &.alert-alert {
     @extend .alert-warning;
   }

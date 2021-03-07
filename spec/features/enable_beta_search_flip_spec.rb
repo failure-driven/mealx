@@ -2,31 +2,46 @@ require "rails_helper"
 
 feature "Enable beta search flip", js: true do
   scenario "enable beta search flip" do
-    When "user visits the app" do
-      # TODO: change to root_path and a sign up flow from home page
-      visit user_session_path
+    When "Whitney WOlve of bumble visits Meal X to multiply her meals" do
+      visit root_path
     end
 
-    Then "see invite page" do
-      # TODO: an actual invite page, not just a page with no nav-links
+    Then "the see a sign up call to action" do
+      wait_for do
+        page.find_all(".pre-container .jumbotron a").map(&:text)
+      end.to eq(["Register for early beta"])
+    end
+
+    When "Whiteny registers" do
+      page.find(".pre-container .jumbotron a", text: "Register for early beta").click
+      page.find("form.new_user").fill_in("Email", with: "whitney.wolfe@bumble.com")
+      page.find("form.new_user").find('input[type="submit"]').click
+    end
+
+    Then "she sees a notification that she should check her email for a link to activate her account" do
+      wait_for do
+        page.find('.alert [data-testid="message"]').text
+      end.to eq "A message with a confirmation link has been sent to your email address. " \
+        "Please follow the link to activate your account."
+    end
+
+    But "she is still on the landing page and is NOT logged in" do
       wait_for do
         page.find_all("nav.navbar .nav-link").map(&:text)
       end.to contain_exactly("Log in", "Sign up")
     end
 
-    When "they sign up" do
-      page.find("form#new_user").sibling("a", text: "Sign up").click
-      page.find("form.new_user").fill_in("Email", with: "whitney.wolfe@bumble.com")
-      page.find("form.new_user").fill_in("Password", with: "1password")
-      page.find("form.new_user").fill_in("Password confirmation", with: "1password")
-      page.find("form.new_user").find('input[type="submit"]').click
+    When "she activates her account via the email" do
+      open_email "whitney.wolfe@bumble.com"
       wait_for do
-        page.find('.alert [data-testid="message"]').text
-      end.to eq "Welcome! You have signed up successfully."
+        current_email.text
+      end.to match(/Welcome whitney.wolfe@bumble.com!.*confirm.*link below: Confirm my account.*/)
+      current_email.click_link "Confirm my account"
+      clear_emails
     end
 
-    Then "see awaiting beta page" do
-      # TODO: a different page not just that they are signed in
+    Then "she sees she is on the preview and signed in" do
+      expect(page).to have_current_path("/preview")
       wait_for do
         page.find_all("nav.navbar .nav-link").map(&:text)
       end.to eq ["whitney.wolfe@bumble.com"]
@@ -40,6 +55,7 @@ feature "Enable beta search flip", js: true do
         user_actions: { admin: { can_administer: true } },
         password: "1password",
         password_confirmation: "1password",
+        confirmed_at: DateTime.now,
       )
 
       visit admin_users_path
