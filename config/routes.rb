@@ -15,7 +15,9 @@ Rails.application.routes.draw do
 
     root to: "users#index"
   end
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+  }
 
   mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql" if Rails.env.development?
   post "/graphql", to: "graphql#execute"

@@ -13,6 +13,9 @@ Data
   do and don't have menu items for
 Beta signup
 - [ ] password optional
+- [ ] secure flipper
+- [ ] custom sign up screen
+- [ ] JWT for acccepting beta single use - reset the reset_token
 - [ ] confirmable
 - [ ] remove unfinished elements
 - [ ] move the flash message to hover over the pre-container
