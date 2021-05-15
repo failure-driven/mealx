@@ -112,7 +112,6 @@ function Meals({ meal }) {
               >
                 {name}
                 {' '}
-&nbsp;
                 <i className="fas fa-times" />
               </button>
               <i className="fas fa-plus mr-2" />
@@ -168,13 +167,17 @@ Meals.defaultProps = {
   meal: {},
 };
 
-export default function MealMultiplier(params) {
+export default function MealMultiplier({ options: { googleApiKey } }) {
   return (
     <Router>
       <Meals path="multiplier" />
-      <Search path="multiplier/search" mapKey={params.options.googleApiKey} />
-      <Search path="multiplier/search/:query" mapKey={params.options.googleApiKey} />
+      <Search path="multiplier/search" mapKey={googleApiKey} />
+      <Search path="multiplier/search/:query" mapKey={googleApiKey} />
       <Meals path="multiplier/:meal" />
     </Router>
   );
 }
+
+MealMultiplier.propTypes = {
+  options: object.isRequired,
+};
