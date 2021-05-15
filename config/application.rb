@@ -43,5 +43,11 @@ module Mealx
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid
     end
+
+    # as per https://github.com/sass/sassc-ruby/issues/207
+    # in an attempt to prevent sassc segmentation fault on deploy to heroku
+    config.assets.configure do |env|
+      env.export_concurrent = false
+    end
   end
 end
