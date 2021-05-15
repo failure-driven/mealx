@@ -1,4 +1,4 @@
-ruby 2.7.2
+ruby 3.0.1
 postgres 12.3
-redis 5.0.9
-nodejs 14.15.4
+redis 6.2.1
+nodejs 14.16.1
